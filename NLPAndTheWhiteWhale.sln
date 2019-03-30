@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.489
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLPAndTheWhiteWhale", "NLPAndTheWhiteWhale\NLPAndTheWhiteWhale.csproj", "{3875A492-2B4F-4973-9B42-052D734C94B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLPAndTheWhiteWhale.Tests", "NLPAndTheWhiteWhale.Tests\NLPAndTheWhiteWhale.Tests.csproj", "{BBD7D726-7C6B-47E0-8A85-50DE15B7159F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3875A492-2B4F-4973-9B42-052D734C94B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3875A492-2B4F-4973-9B42-052D734C94B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3875A492-2B4F-4973-9B42-052D734C94B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3875A492-2B4F-4973-9B42-052D734C94B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBD7D726-7C6B-47E0-8A85-50DE15B7159F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBD7D726-7C6B-47E0-8A85-50DE15B7159F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBD7D726-7C6B-47E0-8A85-50DE15B7159F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBD7D726-7C6B-47E0-8A85-50DE15B7159F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BEB45815-EAF8-4F69-A1B9-3F6841A44A8E}
+	EndGlobalSection
+EndGlobal
