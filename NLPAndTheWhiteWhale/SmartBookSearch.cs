@@ -45,22 +45,12 @@ namespace NLPAndTheWhiteWhale
         {
             var results = new List<TitleRanking>();
 
-            var decodedSearchText = NlpProcessor.DecodeSentence(searchText);
-
-            var basicStringParser = new BasicStringParser();
-            var noun = basicStringParser.ExtractWords(decodedSearchText, "NN");
-
-            if (noun.Count == 0)
-            {
-                return;
-            }
-
-            var adjectives = basicStringParser.ExtractWords(decodedSearchText, "JJ");
+            var decodedSearchText = NlpProcessor.FindNounePhrases(searchText);
 
             // search for all records with the noun, return the count of adjectives for each
             foreach (var title in SmartBooks)
             {
-                var totalMatchingAdjectives = title.MatchRecord(noun[0], adjectives);
+                var totalMatchingAdjectives = title.MatchRecord(decodedSearchText[0].Noun, decodedSearchText[0].Adjectives);
                 if (totalMatchingAdjectives > -1)
                 {
                     results.Add(new TitleRanking
@@ -71,6 +61,7 @@ namespace NLPAndTheWhiteWhale
                 }
             }
 
+            Console.WriteLine(Environment.NewLine+ Environment.NewLine);
             foreach (var result in results.OrderByDescending(n => n.MatchingAdjectives))
             {
                 Console.WriteLine(result.Title);
