@@ -138,7 +138,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicStringParser.cs" />
     <Compile Include="Books.cs" />
     <Compile Include="NlpProcessor.cs" />
     <Compile Include="NounPhrase.cs" />

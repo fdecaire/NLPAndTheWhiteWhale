@@ -8,7 +8,17 @@ namespace NLPAndTheWhiteWhale.Tests
         [TestMethod]
         public void ParseTest1()
         {
-            var decodedTitle = NlpProcessor.DecodeSentence("The Whale with the White Fin");
+            var decodedTitle = NlpProcessor.FindNounePhrases("The Whale with the White Fin");
+
+            Assert.AreEqual(2, decodedTitle.Count);
+        }
+
+        [TestMethod]
+        public void ParseTest2()
+        {
+            var decodedTitle = NlpProcessor.FindNounePhrases("Where the Wild Things Are");
+
+            Assert.AreEqual(1, decodedTitle.Count);
         }
     }
 }

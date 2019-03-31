@@ -57,18 +57,6 @@ namespace NLPAndTheWhiteWhale
             _lexicalizedParser = LexicalizedParser.loadModel(modelsDirectory + @"\lexparser\englishPCFG.ser.gz");
         }
 
-        public static string DecodeSentence(string searchText)
-        {
-            var tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "");
-            var sent2Reader = new StringReader(searchText);
-            var rawWords = tokenizerFactory.getTokenizer(sent2Reader).tokenize();
-            sent2Reader.close();
-            var tree = Instance._lexicalizedParser.apply(rawWords);
-
-            var treeFind = new TreeFind();
-            return treeFind.FindNounPhraseOld(tree).toString();
-        }
-
         public static List<NounPhrase> FindNounePhrases(string searchText)
         {
             var tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "");
@@ -173,31 +161,6 @@ namespace NLPAndTheWhiteWhale
                 }
 
                 return false;
-            }
-
-            public Tree FindNounPhraseOld(Tree tree)
-            {
-                if (tree == null)
-                {
-                    return null;
-                }
-
-                foreach (var childNode in tree.children())
-                {
-                    if (childNode.value() == "NP")
-                    {
-                        return childNode;
-                    }
-
-                    var result = FindNounPhraseOld(childNode);
-
-                    if (result != null)
-                    {
-                        return result;
-                    }
-                }
-
-                return null;
             }
         }
     }
