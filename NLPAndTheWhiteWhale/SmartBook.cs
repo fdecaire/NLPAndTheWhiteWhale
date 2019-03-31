@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace NLPAndTheWhiteWhale
 {
@@ -13,7 +12,7 @@ namespace NLPAndTheWhiteWhale
             Title = title;
 
             // feed the title into NLP processor and generate the subject and adjectives
-            NounPhrases = NlpProcessor.FindNounePhrases(Title.ToLower());
+            NounPhrases = NlpProcessor.FindNounPhrases(Title.ToLower());
         }
 
         public int MatchRecord(string noun, List<string> adjectives)

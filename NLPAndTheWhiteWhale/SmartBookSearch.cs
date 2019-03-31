@@ -45,7 +45,7 @@ namespace NLPAndTheWhiteWhale
         {
             var results = new List<TitleRanking>();
 
-            var decodedSearchText = NlpProcessor.FindNounePhrases(searchText);
+            var decodedSearchText = NlpProcessor.FindNounPhrases(searchText);
 
             // search for all records with the noun, return the count of adjectives for each
             foreach (var title in SmartBooks)

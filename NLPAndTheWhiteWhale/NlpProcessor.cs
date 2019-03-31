@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using com.sun.xml.@internal.ws.api;
 using edu.stanford.nlp.parser.lexparser;
 using edu.stanford.nlp.process;
 using edu.stanford.nlp.trees;
@@ -13,7 +10,7 @@ namespace NLPAndTheWhiteWhale
     public class NlpProcessor
     {
         private static NlpProcessor _nlpProcessor;
-        private LexicalizedParser _lexicalizedParser;
+        private readonly LexicalizedParser _lexicalizedParser;
 
         public static NlpProcessor Instance
         {
@@ -54,10 +51,11 @@ namespace NLPAndTheWhiteWhale
             var modelsDirectory = jarRoot + @"\edu\stanford\nlp\models";
 
             // Loading english PCFG parser from file
+            //TODO: research extraFlags parameter to see if the load message can be suppressed
             _lexicalizedParser = LexicalizedParser.loadModel(modelsDirectory + @"\lexparser\englishPCFG.ser.gz");
         }
 
-        public static List<NounPhrase> FindNounePhrases(string searchText)
+        public static List<NounPhrase> FindNounPhrases(string searchText)
         {
             var tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "");
             var sent2Reader = new StringReader(searchText);
@@ -150,7 +148,6 @@ namespace NLPAndTheWhiteWhale
 
             private bool IsAnyChildNodeANounPhrase(Tree childNode)
             {
-                // not sure if we need to go deeper than one level
                 foreach (var nounPhraseChild in childNode.children())
                 {
                     if (nounPhraseChild.value() == "NP")
