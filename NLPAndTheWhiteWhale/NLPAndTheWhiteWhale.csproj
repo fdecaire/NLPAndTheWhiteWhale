@@ -141,6 +141,7 @@
     <Compile Include="BasicStringParser.cs" />
     <Compile Include="Books.cs" />
     <Compile Include="NlpProcessor.cs" />
+    <Compile Include="NounPhrase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SmartBookSearch.cs" />

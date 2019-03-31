@@ -16,6 +16,8 @@ namespace NLPAndTheWhiteWhale
             // feed the title into NLP processor and generate the subject and adjectives
             var decodedTitle = NlpProcessor.DecodeSentence(title);
 
+            var temp = NlpProcessor.FindNounePhrases("The big white Whale with the white Fin");
+
             // extract all JJ and NN words
             var basicStringParser = new BasicStringParser();
             var nouns = basicStringParser.ExtractWords(decodedTitle, "NN");

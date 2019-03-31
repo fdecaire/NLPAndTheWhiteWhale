@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using com.sun.xml.@internal.ws.api;
 using edu.stanford.nlp.parser.lexparser;
 using edu.stanford.nlp.process;
 using edu.stanford.nlp.trees;
@@ -64,34 +66,138 @@ namespace NLPAndTheWhiteWhale
             var tree = Instance._lexicalizedParser.apply(rawWords);
 
             var treeFind = new TreeFind();
-            return treeFind.FindNounPhrase(tree);
+            return treeFind.FindNounPhraseOld(tree).toString();
+        }
+
+        public static List<NounPhrase> FindNounePhrases(string searchText)
+        {
+            var tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "");
+            var sent2Reader = new StringReader(searchText);
+            var rawWords = tokenizerFactory.getTokenizer(sent2Reader).tokenize();
+            sent2Reader.close();
+            var tree = Instance._lexicalizedParser.apply(rawWords);
+
+            var treeFind = new TreeFind();
+            var result = treeFind.FindNounPhrases(tree);
+
+            return result;
         }
 
         public class TreeFind
         {
-            public string FindNounPhrase(Tree tree)
+            private string _indent = "";
+            public string DebugString = "";
+
+            public List<NounPhrase> FindNounPhrases(Tree tree)
+            {
+                var result = new List<NounPhrase>();
+                _indent += "-";
+
+                if (tree == null)
+                {
+                    return null;
+                }
+
+                foreach (var childNode in tree.children())
+                {
+                    DebugString += _indent + childNode.value() + " " + childNode.firstChild()?.toString() + "\n";
+                    if (childNode.value() == "NP")
+                    {
+                        if (!IsAnyChildNodeANounPhrase(childNode))
+                        {
+                            // find the noun
+                            var noun = FindNoun(childNode);
+
+                            // find all adjectives
+                            var adjectives = FindAdjectives(childNode);
+
+                            var nounPhrase = new NounPhrase
+                            {
+                                Noun = noun,
+                                Adjectives = adjectives
+                            };
+
+                            result.Add(nounPhrase);
+                        }
+                    }
+
+                    var previousResult2 = FindNounPhrases(childNode);
+
+                    if (previousResult2 != null)
+                    {
+                        result.AddRange(previousResult2);
+                    }
+                }
+
+                return result;
+            }
+
+            private List<string> FindAdjectives(Tree childNode)
+            {
+                var result = new List<string>();
+
+                foreach (var nounPhraseChild in childNode.children())
+                {
+                    if (nounPhraseChild.value() == "JJ")
+                    {
+                        result.Add(nounPhraseChild.firstChild().toString());
+                    }
+                }
+
+                return result;
+            }
+
+            private string FindNoun(Tree childNode)
+            {
+                foreach (var nounPhraseChild in childNode.children())
+                {
+                    if (nounPhraseChild.value() == "NN" || nounPhraseChild.value() == "NNP")
+                    {
+                        return nounPhraseChild.firstChild().toString();
+                    }
+                }
+
+                return "";
+            }
+
+            private bool IsAnyChildNodeANounPhrase(Tree childNode)
+            {
+                // not sure if we need to go deeper than one level
+                foreach (var nounPhraseChild in childNode.children())
+                {
+                    if (nounPhraseChild.value() == "NP")
+                    {
+                        // skip the current noun phrase, it contains one or more sub-noun phrases
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            public Tree FindNounPhraseOld(Tree tree)
             {
                 if (tree == null)
                 {
-                    return "";
+                    return null;
                 }
 
                 foreach (var childNode in tree.children())
                 {
                     if (childNode.value() == "NP")
                     {
-                        return childNode.toString();
+                        return childNode;
                     }
 
-                    var result = FindNounPhrase(childNode);
+                    var result = FindNounPhraseOld(childNode);
 
-                    if (!string.IsNullOrEmpty(result))
+                    if (result != null)
                     {
                         return result;
                     }
                 }
 
-                return "";
+                return null;
             }
         }
     }
