@@ -99,7 +99,7 @@ namespace NLPAndTheWhiteWhale
 
                             var nounPhrase = new NounPhrase
                             {
-                                Noun = noun,
+                                Nouns = noun,
                                 Adjectives = adjectives
                             };
 
@@ -133,17 +133,19 @@ namespace NLPAndTheWhiteWhale
                 return result;
             }
 
-            private string FindNoun(Tree childNode)
+            private List<string> FindNoun(Tree childNode)
             {
+                var result = new List<string>();
+
                 foreach (var nounPhraseChild in childNode.children())
                 {
                     if (nounPhraseChild.value() == "NN" || nounPhraseChild.value() == "NNP")
                     {
-                        return nounPhraseChild.firstChild().toString();
+                        result.Add(nounPhraseChild.firstChild().toString());
                     }
                 }
 
-                return "";
+                return result;
             }
 
             private bool IsAnyChildNodeANounPhrase(Tree childNode)

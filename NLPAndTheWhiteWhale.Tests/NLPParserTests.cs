@@ -8,7 +8,7 @@ namespace NLPAndTheWhiteWhale.Tests
         [TestMethod]
         public void ParseTest1()
         {
-            var decodedTitle = NlpProcessor.FindNounPhrases("The Whale with the White Fin");
+            var decodedTitle = NlpProcessor.FindNounPhrases("the whale with the white fin");
 
             Assert.AreEqual(2, decodedTitle.Count);
         }
@@ -16,9 +16,18 @@ namespace NLPAndTheWhiteWhale.Tests
         [TestMethod]
         public void ParseTest2()
         {
-            var decodedTitle = NlpProcessor.FindNounPhrases("Where the Wild Things Are");
+            var decodedTitle = NlpProcessor.FindNounPhrases("where the wild things are");
 
             Assert.AreEqual(1, decodedTitle.Count);
+        }
+
+        [TestMethod]
+        public void ParseTest3()
+        {
+            var decodedTitle = NlpProcessor.FindNounPhrases("humpback whale");
+
+            Assert.AreEqual(1, decodedTitle.Count);
+            Assert.IsTrue(decodedTitle[0].Nouns.Contains("whale"));
         }
     }
 }

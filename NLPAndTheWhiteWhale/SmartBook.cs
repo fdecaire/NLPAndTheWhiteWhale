@@ -19,23 +19,26 @@ namespace NLPAndTheWhiteWhale
         {
             foreach (var nounPhrase in NounPhrases)
             {
-                if (noun == nounPhrase.Noun)
+                foreach (var nounItem in nounPhrase.Nouns)
                 {
-                    var adjectiveCount = 0;
-
-                    foreach (var adjective in adjectives)
+                    if (noun == nounItem)
                     {
-                        foreach (var localAdjective in nounPhrase.Adjectives)
+                        var adjectiveCount = 0;
+
+                        foreach (var adjective in adjectives)
                         {
-                            if (adjective.ToLower() == localAdjective)
+                            foreach (var localAdjective in nounPhrase.Adjectives)
                             {
-                                adjectiveCount++;
-                                break;
+                                if (adjective.ToLower() == localAdjective)
+                                {
+                                    adjectiveCount++;
+                                    break;
+                                }
                             }
                         }
-                    }
 
-                    return adjectiveCount;
+                        return adjectiveCount;
+                    }
                 }
             }
 
