@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace NLPAndTheWhiteWhale
 {
@@ -15,34 +16,51 @@ namespace NLPAndTheWhiteWhale
             NounPhrases = NlpProcessor.FindNounPhrases(Title.ToLower());
         }
 
-        public int MatchRecord(string noun, List<string> adjectives)
+        public int MatchRecord(List<string> noun, List<string> adjectives)
         {
+            var scoreList = new List<int>();
             foreach (var nounPhrase in NounPhrases)
             {
+                var nounCount = 0;
                 foreach (var nounItem in nounPhrase.Nouns)
                 {
-                    if (noun == nounItem)
+                    if (noun.Contains(nounItem))
                     {
-                        var adjectiveCount = 0;
+                        nounCount++;
+                    }
+                }
 
-                        foreach (var adjective in adjectives)
+                if (nounCount > 0)
+                {
+                    var adjectiveCount = 0;
+                    foreach (var adjective in adjectives)
+                    {
+                        foreach (var localAdjective in nounPhrase.Adjectives)
                         {
-                            foreach (var localAdjective in nounPhrase.Adjectives)
+                            if (adjective.ToLower() == localAdjective)
                             {
-                                if (adjective.ToLower() == localAdjective)
-                                {
-                                    adjectiveCount++;
-                                    break;
-                                }
+                                adjectiveCount++;
+                                break;
                             }
                         }
-
-                        return adjectiveCount;
                     }
+
+                    scoreList.Add(nounCount * 100 + adjectiveCount);
                 }
             }
 
-            return -1;
+            if (!scoreList.Any())
+            {
+                return -1;
+            }
+
+            var largest = scoreList.Max();
+            if (largest == 0)
+            {
+                return -1;
+            }
+
+            return largest;
         }
     }
 }

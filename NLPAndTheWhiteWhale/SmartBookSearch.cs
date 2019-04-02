@@ -54,9 +54,7 @@ namespace NLPAndTheWhiteWhale
             // search for all records with the noun, return the count of adjectives for each
             foreach (var title in SmartBooks)
             {
-                foreach (var noun in decodedSearchText[0].Nouns)
-                {
-                    var totalMatchingAdjectives = title.MatchRecord(noun, decodedSearchText[0].Adjectives);
+                    var totalMatchingAdjectives = title.MatchRecord(decodedSearchText[0].Nouns, decodedSearchText[0].Adjectives);
                     if (totalMatchingAdjectives > -1)
                     {
                         results.Add(new TitleRanking
@@ -65,7 +63,6 @@ namespace NLPAndTheWhiteWhale
                             MatchingAdjectives = totalMatchingAdjectives
                         });
                     }
-                }
             }
 
             Console.WriteLine(Environment.NewLine+ Environment.NewLine);
