@@ -124,6 +124,15 @@ namespace NLPAndTheWhiteWhale
 
                 foreach (var nounPhraseChild in childNode.children())
                 {
+                    if (nounPhraseChild.value() == "ADJP")
+                    {
+                        var subTree = FindAdjectives(nounPhraseChild);
+                        if (subTree.Count > 0)
+                        {
+                            result.AddRange(subTree);
+                        }
+                    }
+
                     if (nounPhraseChild.value() == "JJ")
                     {
                         result.Add(nounPhraseChild.firstChild().toString());

@@ -54,21 +54,21 @@ namespace NLPAndTheWhiteWhale
             // search for all records with the noun, return the count of adjectives for each
             foreach (var title in SmartBooks)
             {
-                    var totalMatchingAdjectives = title.MatchRecord(decodedSearchText[0].Nouns, decodedSearchText[0].Adjectives);
-                    if (totalMatchingAdjectives > -1)
+                var totalScore = title.MatchRecord(decodedSearchText[0].Nouns, decodedSearchText[0].Adjectives);
+                if (totalScore > -1)
+                {
+                    results.Add(new TitleRanking
                     {
-                        results.Add(new TitleRanking
-                        {
-                            Title = title.Title,
-                            MatchingAdjectives = totalMatchingAdjectives
-                        });
-                    }
+                        Title = title.Title,
+                        SearchScore = totalScore
+                    });
+                }
             }
 
             Console.WriteLine(Environment.NewLine+ Environment.NewLine);
-            foreach (var result in results.OrderByDescending(n => n.MatchingAdjectives))
+            foreach (var result in results.OrderByDescending(n => n.SearchScore))
             {
-                Console.WriteLine(result.Title);
+                Console.WriteLine(result.SearchScore + "  " + result.Title);
             }
         }
     }

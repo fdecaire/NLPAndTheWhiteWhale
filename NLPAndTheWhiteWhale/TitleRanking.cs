@@ -3,6 +3,6 @@
     public class TitleRanking
     {
         public string Title { get; set; }
-        public int MatchingAdjectives { get; set; }
+        public int SearchScore { get; set; }
     }
 }

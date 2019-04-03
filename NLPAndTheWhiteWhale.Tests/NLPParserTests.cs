@@ -29,5 +29,15 @@ namespace NLPAndTheWhiteWhale.Tests
             Assert.AreEqual(1, decodedTitle.Count);
             Assert.IsTrue(decodedTitle[0].Nouns.Contains("whale"));
         }
+
+        [TestMethod]
+        public void ParseTest4()
+        {
+            var decodedTitle = NlpProcessor.FindNounPhrases("the blue and white whale");
+
+            Assert.AreEqual(1, decodedTitle.Count);
+            Assert.AreEqual(2,decodedTitle[0].Adjectives.Count);
+            Assert.AreEqual(1,decodedTitle[0].Nouns.Count);
+        }
     }
 }

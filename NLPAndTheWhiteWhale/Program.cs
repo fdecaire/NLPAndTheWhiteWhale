@@ -14,7 +14,7 @@ namespace NLPAndTheWhiteWhale
             //books.SimpleSearchUsingAnd("white whale");
 
             var smartBooks = new SmartBookSearch();
-            smartBooks.Search("white whale");
+            smartBooks.Search("the blue and white whale");
 
             Console.ReadKey();
         }
